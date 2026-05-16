@@ -13,10 +13,8 @@ export const useStore = create((set, get) => ({
 
   // Called after successful API login — stores user + token
   loginSuccess: (userData, token) => {
-    console.log('Storing user data and token in store:', userData, token)
     tokenStore.set(token)
     set({ user: userData, isLoggedIn: true })
-    console.log("isLoggedIn:", get().isLoggedIn) // true
   },
   adminLoginSuccess: (adminData, token) => {
     tokenStore.setAdmin(token)

@@ -45,7 +45,6 @@ export function Login() {
       const res = await authApi.login({ login: fields.login, password: fields.password })
       loginSuccess(res.data.user, res.data.token)
       addToast('Welcome back! 👋', 'success')
-      useStore.s
       navigate('/dashboard')
     } catch (err) {
       setError(err.message || 'Login failed')

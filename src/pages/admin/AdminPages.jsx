@@ -14,19 +14,43 @@ import {
   DollarSign, TrendingUp, ShieldCheck, Cpu,
   Eye, Ban, CheckCircle, XCircle, Plus, Upload
 } from 'lucide-react'
+import { authApi } from '../../services/api'
 
 // ─────────────────────────────────────────────────────────────
 // ADMIN LOGIN
 // ─────────────────────────────────────────────────────────────
 export function AdminLogin() {
   const navigate = useNavigate()
-  const { adminLogin, addToast } = useStore()
+  const { adminLoginSuccess, addToast } = useStore()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    adminLogin()
-    addToast('Admin access granted', 'success')
-    navigate('/admin/dashboard')
+    if (!email || !password) {
+      addToast('Please enter both email and password', 'warning')
+      return
+    }
+    setLoading(true)
+    try {
+      const res = await authApi.adminLogin({
+        email,
+        password
+      })
+      console.log('Admin login response:', res)
+      adminLoginSuccess(res.data.admin, res.data.token)
+      addToast('Admin access granted', 'success')
+      navigate('/admin/dashboard')
+      
+    } catch (err) {
+      addToast(err.message || 'Login failed' , 'error')
+      console.error('Admin login error:', err)
+    } finally {
+      setLoading(false)
+    }
+
+
   }
 
   return (
@@ -50,11 +74,11 @@ export function AdminLogin() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="label">Admin Email</label>
-              <input className="input" type="email" defaultValue="admin@voteai.io" />
+              <input className="input" onChange={(e) => setEmail(e.target.value)} type="email" />
             </div>
             <div>
               <label className="label">Password</label>
-              <input className="input" type="password" defaultValue="••••••••" />
+              <input className="input" onChange={(e) => setPassword(e.target.value)} type="password" />
             </div>
             <button type="submit" className="btn-danger w-full justify-center py-3 text-base">
               <ShieldCheck size={16} /> Access Admin Panel
@@ -188,7 +212,7 @@ export function AdminUsers() {
                 onChange={e => setSearch(e.target.value)}
               />
               <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/30" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </div>
             <select className="input text-sm py-2" style={{ width: 'auto' }} value={filter} onChange={e => setFilter(e.target.value)}>
