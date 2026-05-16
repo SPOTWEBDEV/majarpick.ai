@@ -1,0 +1,399 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — theme tokens
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Dark mode defaults */
+  --bg:        #050508;
+  --bg2:       #0c0c14;
+  --bg3:       #12121e;
+  --bg4:       #1a1a2e;
+  --card:      #111120;
+  --card2:     #181830;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.15);
+  --text:      #ffffff;
+  --text2:     rgba(255,255,255,0.80);
+  --text3:     rgba(255,255,255,0.50);
+  --text4:     rgba(255,255,255,0.30);
+  --text5:     rgba(255,255,255,0.15);
+  --neon:      #00ff9d;
+  --neon-dark: #00cc7a;
+  --scrollbar-track: #0c0c14;
+  --scrollbar-thumb: rgba(0,255,157,0.2);
+}
+
+html.light {
+  --bg:        #f1f5f9;
+  --bg2:       #ffffff;
+  --bg3:       #f8fafc;
+  --bg4:       #e2e8f0;
+  --card:      #ffffff;
+  --card2:     #f8fafc;
+  --border:    rgba(0,0,0,0.08);
+  --border2:   rgba(0,0,0,0.14);
+  --text:      #0f172a;
+  --text2:     #1e293b;
+  --text3:     #475569;
+  --text4:     #94a3b8;
+  --text5:     #cbd5e1;
+  --neon:      #059669;
+  --neon-dark: #047857;
+  --scrollbar-track: #e2e8f0;
+  --scrollbar-thumb: rgba(5,150,105,0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE
+   ───────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 2px; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COMPONENT CLASSES (use CSS vars so they auto-adapt)
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Buttons ─────────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 active:scale-95 hover:-translate-y-px;
+    background: var(--neon);
+    color: #000;
+  }
+  .btn-primary:hover { filter: brightness(0.9); }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 active:scale-95;
+    border: 1.5px solid var(--neon);
+    color: var(--neon);
+    background: transparent;
+  }
+  .btn-outline:hover { background: color-mix(in srgb, var(--neon) 12%, transparent); }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 active:scale-95;
+    border: 1.5px solid var(--border2);
+    color: var(--text3);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    background: var(--bg3);
+    border-color: var(--border2);
+    color: var(--text);
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-red-500 text-white transition-all duration-200 hover:bg-red-600 active:scale-95;
+  }
+
+  .btn-icon {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200;
+    background: var(--bg3);
+    border: 1.5px solid var(--border);
+    color: var(--text3);
+  }
+  .btn-icon:hover {
+    border-color: var(--border2);
+    color: var(--text);
+  }
+
+  /* ── Cards ───────────────────────────────────────────────── */
+  .card {
+    @apply rounded-2xl p-5;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .card-hover {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+  .card-hover:hover {
+    background: var(--card2);
+    border-color: var(--border2);
+  }
+  .card-glow {
+    @apply transition-all duration-200;
+  }
+  .card-glow:hover {
+    border-color: color-mix(in srgb, var(--neon) 35%, transparent);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--neon) 10%, transparent);
+  }
+
+  /* ── Inputs ──────────────────────────────────────────────── */
+  .input {
+    @apply w-full px-3.5 py-2.5 rounded-lg text-sm transition-all duration-200 focus:outline-none;
+    background: var(--bg3);
+    border: 1.5px solid var(--border2);
+    color: var(--text);
+  }
+  .input::placeholder { color: var(--text4); }
+  .input:focus {
+    border-color: var(--neon);
+    background: var(--card);
+  }
+  .input option {
+    background: var(--bg2);
+    color: var(--text);
+  }
+
+  .label {
+    @apply block text-xs font-bold uppercase tracking-wider mb-1.5;
+    color: var(--text3);
+  }
+
+  /* ── Badges ──────────────────────────────────────────────── */
+  .badge-green  { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-emerald-500/15 text-emerald-500 border border-emerald-500/25; }
+  .badge-red    { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-red-500/15 text-red-500 border border-red-500/25; }
+  .badge-yellow { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-amber-400/15 text-amber-500 border border-amber-400/25; }
+  .badge-blue   { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-blue-500/15 text-blue-500 border border-blue-500/25; }
+  .badge-purple { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-purple-500/15 text-purple-600 border border-purple-500/25; }
+  .badge-gold   { @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-yellow-500/15 text-yellow-600 border border-yellow-500/25; }
+
+  /* ── Skeleton ────────────────────────────────────────────── */
+  .skeleton {
+    @apply rounded-lg;
+    background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* ── Tabs ────────────────────────────────────────────────── */
+  .tabs {
+    @apply flex rounded-lg p-1;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+  }
+  .tab {
+    @apply flex-1 py-2 px-4 text-sm font-semibold rounded-md cursor-pointer transition-all duration-200 text-center;
+    color: var(--text3);
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: var(--neon);
+    color: #000;
+  }
+
+  /* ── Sidebar items ───────────────────────────────────────── */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium cursor-pointer rounded-lg transition-all duration-200 mx-2;
+    color: var(--text3);
+  }
+  .sidebar-item:hover {
+    background: var(--bg3);
+    color: var(--text);
+  }
+  .sidebar-item.active {
+    background: color-mix(in srgb, var(--neon) 12%, transparent);
+    color: var(--neon);
+  }
+
+  /* ── Toggle switch ───────────────────────────────────────── */
+  .toggle {
+    @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 cursor-pointer;
+    background: var(--bg4);
+    border: 1.5px solid var(--border2);
+  }
+  .toggle.on {
+    background: color-mix(in srgb, var(--neon) 20%, transparent);
+    border-color: var(--neon);
+  }
+  .toggle-thumb {
+    @apply absolute left-0.5 h-5 w-5 rounded-full transition-transform duration-300;
+    background: var(--text4);
+  }
+  .toggle.on .toggle-thumb {
+    @apply translate-x-5;
+    background: var(--neon);
+  }
+
+  /* ── Progress bar ────────────────────────────────────────── */
+  .progress-bar {
+    @apply h-1.5 rounded-full overflow-hidden;
+    background: var(--bg4);
+  }
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-700;
+    background: linear-gradient(90deg, var(--neon), #1e90ff);
+  }
+
+  /* ── Section headings ────────────────────────────────────── */
+  .section-title {
+    @apply font-display font-black tracking-tight;
+    color: var(--text);
+  }
+  .section-sub {
+    color: var(--text3);
+  }
+
+  /* ── Nav link ────────────────────────────────────────────── */
+  .nav-link {
+    @apply text-sm font-medium transition-colors;
+    color: var(--text3);
+  }
+  .nav-link:hover { color: var(--text); }
+
+  /* ── Dropdown / popup menus ──────────────────────────────── */
+  .dropdown-panel {
+    @apply rounded-xl shadow-2xl overflow-hidden border;
+    background: var(--card2);
+    border-color: var(--border2);
+  }
+  .dropdown-item {
+    @apply flex items-center gap-2.5 px-4 py-2.5 text-sm cursor-pointer transition-colors;
+    color: var(--text2);
+  }
+  .dropdown-item:hover {
+    background: var(--bg3);
+    color: var(--text);
+  }
+
+  /* ── Page wrapper ────────────────────────────────────────── */
+  .page-bg {
+    background: var(--bg);
+    @apply min-h-screen;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────── */
+  .divider {
+    border-color: var(--border);
+    @apply border-t my-5;
+  }
+
+  /* ── Stat card helper ────────────────────────────────────── */
+  .stat-label {
+    @apply text-xs font-bold uppercase tracking-wider;
+    color: var(--text4);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LIGHT MODE OVERRIDES
+   (things that can't easily be done with CSS vars alone)
+   ───────────────────────────────────────────────────────────── */
+
+/* Navbar & header backgrounds */
+html.light .navbar-bg   { background: rgba(255,255,255,0.92) !important; border-color: rgba(0,0,0,0.08) !important; }
+html.light .sidebar-bg  { background: #ffffff !important; border-color: rgba(0,0,0,0.08) !important; }
+
+/* Hero gradient */
+html.light .hero-grad {
+  background: radial-gradient(ellipse at 50% 0%, rgba(5,150,105,0.06) 0%, transparent 60%) !important;
+}
+html.light .hero-grid {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px) !important;
+}
+
+/* Ticker */
+html.light .ticker-bg { background: #f8fafc !important; border-color: rgba(0,0,0,0.06) !important; }
+
+/* Code / mono text */
+html.light .mono-text { color: #334155 !important; }
+
+/* Table rows hover */
+html.light tr:hover td { background: rgba(0,0,0,0.02) !important; }
+
+/* Auth page background */
+html.light .auth-bg {
+  background: radial-gradient(ellipse at 50% 30%, rgba(5,150,105,0.05) 0%, transparent 60%) !important;
+}
+
+/* Bottom nav */
+html.light .bottom-nav-light {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Vote image card labels in light mode stay white (they're on dark bg images) */
+/* No override needed — image backgrounds are always dark */
+
+/* Gradient text for 404 */
+html.light .gradient-text {
+  background: linear-gradient(135deg, #059669, #1e90ff) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Landing section alternating backgrounds */
+html.light .section-alt { background: #f8fafc !important; }
+
+/* Neon glow dimmer in light mode */
+html.light .neon-glow-border { border-color: rgba(5,150,105,0.25) !important; }
+html.light .neon-bg-soft     { background: rgba(5,150,105,0.06) !important; }
+
+/* Footer */
+html.light .footer-bg { background: #f8fafc !important; border-color: rgba(0,0,0,0.07) !important; }
+
+/* Referral hero card */
+html.light .referral-hero {
+  background: linear-gradient(135deg, rgba(5,150,105,0.06), transparent) !important;
+  border-color: rgba(5,150,105,0.2) !important;
+}
+
+/* Info/note boxes */
+html.light .note-neon {
+  background: rgba(5,150,105,0.07) !important;
+  border-color: rgba(5,150,105,0.2) !important;
+  color: #047857 !important;
+}
+html.light .note-yellow {
+  background: rgba(245,158,11,0.08) !important;
+  border-color: rgba(245,158,11,0.2) !important;
+  color: #b45309 !important;
+}
+
+/* Result box on dashboard */
+html.light .result-win  { background: rgba(5,150,105,0.08) !important; border-color: rgba(5,150,105,0.25) !important; }
+html.light .result-lose { background: rgba(239,68,68,0.06) !important; border-color: rgba(239,68,68,0.2) !important; }
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0%   { transform: scale(0.85); opacity: 0; }
+  80%  { transform: scale(1.03); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+@keyframes spinOnce {
+  to { transform: rotate(360deg); }
+}
+
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }

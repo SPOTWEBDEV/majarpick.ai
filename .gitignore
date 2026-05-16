@@ -1,0 +1,15 @@
+node_modules
+dist 
+server
+server.
+*.server
+coverage
+.env
+.DS_Store
+.idea
+.vscode
+*.log
+*.tsbuildinfo
+# Optional: Ignore build artifacts
+build
+vendor/
